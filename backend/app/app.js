@@ -13,8 +13,8 @@ app.use((req, res, next) => {
 
 // Routes
 
-app.use('/dev', require('./app/routes/dev.routes.js'));
-app.use('/dev', require('./app/routes/users.routes.js'));
+app.use('/dev', require('./routes/dev.routes.js'));
+app.use('/users', require('./routes/users.routes.js'));
 
 app.listen(process.env.PORT, () =>
   console.log(`port is live on http://localhost:${process.env.PORT}`)

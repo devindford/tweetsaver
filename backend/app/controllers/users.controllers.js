@@ -3,7 +3,7 @@ const client = require('../util/db_config');
 // CRUD controllers
 
 const SCHEMA = process.env.INSTANCE_SCHEMA;
-const TABLE = 'users';
+const TABLE = 'user';
 
 // Create entry
 exports.createOne = async (req, res, next) => {
@@ -19,6 +19,7 @@ exports.createOne = async (req, res, next) => {
         },
       ],
     });
+
     res.json(user);
   } catch (error) {
     res.json(error);
@@ -33,7 +34,7 @@ exports.getAll = async (req, res, next) => {
 
   try {
     const QUERY = `SELECT * FROM ${SCHEMA}.${TABLE}`;
-    const users = await client.query;
+    const users = await client.query(QUERY);
     res.json(users);
   } catch (error) {
     console.error(`ERROR in getAll USER: ${error}`);

@@ -9,5 +9,5 @@ const config = {
 
 const Client = harperive.Client;
 const db = new Client(config);
-
+console.log(config);
 module.exports = db;
