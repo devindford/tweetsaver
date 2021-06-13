@@ -1,3 +1,4 @@
+const cloudinary = require('../util/cloudinary_config');
 const client = require('../util/db_config');
 
 // CRUD controllers
@@ -8,7 +9,22 @@ const TABLE = 'user';
 // Create entry
 exports.createOne = async (req, res, next) => {
   console.log('createOne: [POST] /users/');
+  let cloudinaryData;
   try {
+    await cloudinary.uploader.upload(
+      'https://i.imgur.com/qbHS5qI.jpeg',
+      { folder: 'TweetSaver' },
+      (err, res) => {
+        try {
+          console.log('cloudinary -----');
+          console.log(res);
+          cloudinaryData = res.url;
+          return res;
+        } catch (error) {
+          console.error(err);
+        }
+      }
+    );
     const user = await client.insert({
       table: TABLE,
       records: [
@@ -16,6 +32,7 @@ exports.createOne = async (req, res, next) => {
           username: req.body.username,
           password: req.body.password,
           followers: req.body.followers,
+          image: cloudinaryData || '',
         },
       ],
     });
@@ -35,6 +52,7 @@ exports.getAll = async (req, res, next) => {
   try {
     const QUERY = `SELECT * FROM ${SCHEMA}.${TABLE}`;
     const users = await client.query(QUERY);
+
     res.json(users);
   } catch (error) {
     console.error(`ERROR in getAll USER: ${error}`);

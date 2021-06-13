@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cloudinary": "^1.26.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "harperive": "^2.0.1"
